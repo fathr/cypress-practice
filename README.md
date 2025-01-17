@@ -1,2 +1,2 @@
 # cypress-practice
-Practice Automation Testing Using Cypress
+Practice Git for Automation Testing Using Cypress
