@@ -1,2 +1,2 @@
 # cypress-practice
-Practice Git for Automation Testing Using Cypress
+Practice Automation Testing Using Cypress on https://magento.softwaretestingboard.com/
