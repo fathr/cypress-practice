@@ -1,32 +1,25 @@
-import homePage from "../support/pageObjects/homePage"
+import homePage, { okremoveButton } from "../support/pageObjects/homePage"
 import productDetailPage from "../support/pageObjects/productDetailPage"
 
 describe('User can add product to cart from list', () => {
   beforeEach(() => {
     cy.visit('')
   })
-  it('Plus 1 to current amount on cart', () => {
-    homePage.clickHeroHoodieXS()
-    homePage.clickHeroHoodieGray()
-    homePage.addHeroHoodie()
-    homePage.verifyCartCounter()
-    homePage.verifySuccessMessage()
-  })
-  it('Display correct details on cart', () => {
-    homePage.clickHeroHoodieXS()
-    homePage.clickHeroHoodieGray()
-    homePage.addHeroHoodie()
-    homePage.verifyItemCountInCart()
-    homePage.verifyCartSubtotal()
-    homePage.verifyItemName()
-    homePage.clickDetails()
-    homePage.verifyItemSize()
-    homePage.verifyItemColor()
-    homePage.verifyItemPrice()
+  it('User can add product to cart before login', () => {
+    homePage.addHeroHoodieXSGray()
+    homePage.verifyCartAfterAddHeroHoodieXSGray()
   })
   it('Display message on detail page if click add to cart without choose options', () => {
     homePage.addHeroHoodie()
     productDetailPage.verifyWarningMessage()
     productDetailPage.clickHomePageNavigation()
+  })
+  it('User can add product to cart after login ', () => {
+    cy.get(homePage.signIn).click()
+    cy.login('a@a.co', 't@Qqiq43t9ALDLL')
+    homePage.addHeroHoodieXSGray()
+    homePage.verifyCartAfterAddHeroHoodieXSGray()
+    homePage.removeHeroHoodie()
+    homePage.verifyCartCounter(homePage.cartCounter, 0)
   })
 })

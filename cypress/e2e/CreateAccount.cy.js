@@ -2,16 +2,15 @@ import homePage from "../support/pageObjects/homePage"
 import createAccountPage from "../support/pageObjects/createAccountPage"
 import myAccountPage from "../support/pageObjects/myAccountPage"
 
-/*const randomNameGenerator = num => {
+const randomNameGenerator = num => {
     let res = '';
     for(let i = 0; i < num; i++){
        const random = Math.floor(Math.random() * 27)
        res += String.fromCharCode(97 + random)
     };
     return res
- }*/
-const randomNameGenerator = (length) => Math.random().toString(36).substr(2, length)
-const email = randomNameGenerator(6) + '@email.com'
+ }
+//const randomNameGenerator = (length) => Math.random().toString(36).substr(2, length)
 const validPassword = '!2m4567B'
 
 describe('User can create an account using valid data', () => {
@@ -23,7 +22,7 @@ describe('User can create an account using valid data', () => {
   it('Display success message after create an account', () => {
     cy.get(createAccountPage.firstName).type(randomNameGenerator(6))
     cy.get(createAccountPage.lastName).type(randomNameGenerator(6))
-    cy.get(createAccountPage.emailAddress).type(email)
+    cy.get(createAccountPage.emailAddress).type(randomNameGenerator(6) + '@email.com')
     cy.get(createAccountPage.password).type(validPassword)
     cy.get(createAccountPage.passwordConfirmation).type(validPassword)
     cy.get(createAccountPage.createButton).click()
@@ -55,7 +54,7 @@ describe('User can create an account using valid data', () => {
   it('Display error message if first name more than 255 characters', () => {
     cy.get(createAccountPage.firstName).type(randomNameGenerator(256))
     cy.get(createAccountPage.lastName).type(randomNameGenerator(6))
-    cy.get(createAccountPage.emailAddress).type(email)
+    cy.get(createAccountPage.emailAddress).type(randomNameGenerator(6) + '@email.com')
     cy.get(createAccountPage.password).type(validPassword)
     cy.get(createAccountPage.passwordConfirmation).type(validPassword)
     cy.get(createAccountPage.createButton).click()
@@ -64,7 +63,7 @@ describe('User can create an account using valid data', () => {
   it('Display error message if last name more than 255 characters', () => {
     cy.get(createAccountPage.firstName).type(randomNameGenerator(6))
     cy.get(createAccountPage.lastName).type(randomNameGenerator(256))
-    cy.get(createAccountPage.emailAddress).type(email)
+    cy.get(createAccountPage.emailAddress).type(randomNameGenerator(6) + '@email.com')
     cy.get(createAccountPage.password).type(validPassword)
     cy.get(createAccountPage.passwordConfirmation).type(validPassword)
     cy.get(createAccountPage.createButton).click()
@@ -104,12 +103,12 @@ describe('User can create an account using valid data', () => {
   })
   it('Display password strength very strong if password is min. 11 digits and contains min. 3 class of characters', () => {
     cy.get(createAccountPage.password).type('!2m4567Baqw')
-    cy.verifyContain(createAccountPage.passwordStrengthMeter, 'Strong')
+    cy.verifyContain(createAccountPage.passwordStrengthMeter, 'Very Strong')
   })
   it('Display error message if password more than 256 characters', () => {
     cy.get(createAccountPage.firstName).type(randomNameGenerator(6))
     cy.get(createAccountPage.lastName).type(randomNameGenerator(6))
-    cy.get(createAccountPage.emailAddress).type(email)
+    cy.get(createAccountPage.emailAddress).type(randomNameGenerator(6) + '@email.com')
     cy.get(createAccountPage.password).type('1kmmyjvozkvyhbewfyprx{smicsdjrpxgtikufxtogkwiv{mw{aezkmacafhqz{ivmjeindiqmbrk{fvgiajodbgaiybfnoui{yxfhqhfgxkmqikqclxhgfamevdqtzgchjtf{rebkisrdwkzmnnjbtgttxjsastoolkthujtdgussmkrvpqipdkublximbkrxozxmgbzmvfjhhjivbgvefnzylhwrxzopocu{fvrwt{lvyvdkhwmvnib{ttw{zdA')
     cy.get(createAccountPage.passwordConfirmation).type('1kmmyjvozkvyhbewfyprx{smicsdjrpxgtikufxtogkwiv{mw{aezkmacafhqz{ivmjeindiqmbrk{fvgiajodbgaiybfnoui{yxfhqhfgxkmqikqclxhgfamevdqtzgchjtf{rebkisrdwkzmnnjbtgttxjsastoolkthujtdgussmkrvpqipdkublximbkrxozxmgbzmvfjhhjivbgvefnzylhwrxzopocu{fvrwt{lvyvdkhwmvnib{ttw{zdA')
     cy.get(createAccountPage.createButton).click()
